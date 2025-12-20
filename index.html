@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krish Kumar | AI & Engineering</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (FontAwesome for better icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #09090b;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;     /* Blue */
+            --accent: #8b5cf6;      /* Purple */
+            --highlight: #10b981;   /* Green */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-main: 'Outfit', sans-serif;
+            --font-code: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- 2. ANIMATED BACKGROUND BLOB --- */
+        .background-blob {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #09090b;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary); animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: var(--accent); animation-delay: 2s; }
+        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: var(--highlight); opacity: 0.2; animation-delay: 4s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* --- 3. UTILITIES & LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--primary);
+            font-family: var(--font-code);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- 4. NAVIGATION (Glassmorphism) --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+
+        /* --- 5. HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-badge {
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            color: var(--primary);
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .typewriter {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            height: 30px; /* Prevent layout shift */
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: #000;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            backdrop-filter: blur(5px);
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--text-main);
+        }
+
+        /* --- 6. STATS GRID --- */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 50px auto 100px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .stat-label { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* --- 7. SKILLS (Floating Cards) --- */
+        .skills-section { padding: 100px 0; }
+        
+        .skills-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .skill-card {
+            width: 200px;
+            height: 220px;
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transform: scaleX(0);
+            transition: 0.4s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            background: var(--bg-card-hover);
+        }
+        .skill-card:hover::before { transform: scaleX(1); }
+
+        .skill-icon { font-size: 3rem; margin-bottom: 15px; }
+        .skill-name { font-weight: 600; letter-spacing: 1px; }
+
+        /* --- 8. PROJECTS (New Section) --- */
+        .projects-section { padding: 100px 0; }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+            group: project;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 180px;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255,255,255,0.1);
+        }
+        
+        .project-content { padding: 25px; }
+        
+        .project-title { font-size: 1.4rem; margin-bottom: 10px; }
+        
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-pill {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            color: var(--primary);
+        }
+
+        .project-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .project-link:hover { color: var(--accent); }
+
+        /* --- 9. CONTACT --- */
+        .contact-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .contact-box {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            border-radius: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- 10. ANIMATION UTILS --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .nav-links { display: none; } /* Simplified for demo */
+            nav { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="background-blob">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">KRISH.DEV</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#stats">Stats</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Work</a>
+        </div>
+        <a href="#contact" style="color:white;"><i class="fa-solid fa-envelope"></i></a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero container" id="home">
+        <div class="fade-in">
+            <div class="hero-badge">Available for Hire</div>
+            <h1>I AM <span class="gradient-text">KRISH KUMAR</span></h1>
+            
+            <div class="typewriter">
+                I am <span id="typing-text"></span>
+            </div>
+
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6;">
+                Computer Science Engineering Major specializing in AI/ML at Lovely Professional University. Building the future one algorithm at a time.
+            </p>
+
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="https://github.com" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
+        <!-- Stats Section (Moved up for impact) -->
+        <div class="stats-container fade-in" id="stats">
+            <div class="stat-card">
+                <span class="stat-number" style="color: var(--primary)" data-target="5">0</span>
+                <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: var(--accent)" data-target="3">0</span>
+                <span class="stat-label">Certificates</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: var(--highlight)" data-target="6">0</span>
+                <span class="stat-label">LeetCode Solved</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #f59e0b" data-target="1">0</span>
+                <span class="stat-label">Deployed Apps</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section container" id="skills">
+        <h2 class="section-title fade-in">Tech Arsenal</h2>
+        <p class="section-subtitle fade-in">Tools & Technologies</p>
+
+        <div class="skills-grid fade-in">
+            <!-- Frontend -->
+            <div class="skill-card">
+                <i class="fa-brands fa-html5 skill-icon" style="color: #e34c26;"></i>
+                <div class="skill-name">HTML & CSS</div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-react skill-icon" style="color: #61dafb;"></i>
+                <div class="skill-name">React JS</div>
+            </div>
+            <!-- Backend -->
+            <div class="skill-card">
+                <i class="fa-brands fa-python skill-icon" style="color: #4584b6;"></i>
+                <div class="skill-name">Python</div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-database skill-icon" style="color: var(--accent);"></i>
+                <div class="skill-name">MySQL</div>
+            </div>
+            <!-- AI -->
+            <div class="skill-card">
+                <i class="fa-solid fa-brain skill-icon" style="color: var(--highlight);"></i>
+                <div class="skill-name">Machine Learning</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects (New Section) -->
+    <section class="projects-section container" id="projects">
+        <h2 class="section-title fade-in">Featured Projects</h2>
+        <p class="section-subtitle fade-in">What I've been working on</p>
+
+        <div class="project-grid fade-in">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-img"><i class="fa-solid fa-robot"></i></div>
+                <div class="project-content">
+                    <h3 class="project-title">AI Chatbot</h3>
+                    <p class="project-desc">An intelligent conversational agent built using NLP techniques and Python. Handles context-aware queries.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">TensorFlow</span>
+                    </div>
+                    <a href="#" class="project-link">View Project <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-img"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div class="project-content">
+                    <h3 class="project-title">E-Commerce Platform</h3>
+                    <p class="project-desc">A full-stack shopping application with cart functionality, user auth, and payment integration.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">React</span>
+                        <span class="tech-pill">Node.js</span>
+                    </div>
+                    <a href="#" class="project-link">View Project <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-img"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="project-content">
+                    <h3 class="project-title">Data Visualizer</h3>
+                    <p class="project-desc">Interactive dashboard to visualize complex datasets using modern charting libraries.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">D3.js</span>
+                        <span class="tech-pill">Python</span>
+                    </div>
+                    <a href="#" class="project-link">View Project <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-section container" id="contact">
+        <div class="contact-box fade-in">
+            <h2 class="section-title">Let's Work Together</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">
+                Have a project in mind or just want to say hi? My inbox is always open.
+            </p>
+            <a href="mailto:krish@example.com" class="btn btn-primary">Say Hello</a>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem;">
+        <p>&copy; 2024 Krish Kumar. Built with code & caffeine.</p>
+    </footer>
+
+    <!-- JAVASCRIPT ANIMATIONS -->
+    <script>
+        // 1. Typing Effect
+        const textElement = document.getElementById('typing-text');
+        const phrases = ['a CS Engineer.', 'an AI Enthusiast.', 'a Problem Solver.', 'a Developer.'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(type, 2000); // Pause at end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, 500); // Pause before new word
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // 2. Intersection Observer for Fade-in Animations
+        const observerOptions = { threshold: 0.1 };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Check if it's the stats section to trigger counters
+                    if(entry.target.classList.contains('stats-container')) {
+                        startCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .stats-container').forEach(el => observer.observe(el));
+
+        // 3. Counter Animation
+        let counted = false;
+        function startCounters() {
+            if(counted) return;
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const speed = 200;
+                
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const inc = target / speed * 10; 
+                    
+                    if(count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 40);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+            counted = true;
+        }
+    </script>
+</body>
+</html>
