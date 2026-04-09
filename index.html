@@ -395,7 +395,7 @@
             transform: translateY(0);
         }
 
-        /* --- 11. RESPONSIVE FIXES --- */
+       /* --- 11. RESPONSIVE FIXES --- */
         @media (max-width: 768px) {
             /* Hero adjustments */
             .hero h1 { font-size: 3rem; }
@@ -421,6 +421,25 @@
             .contact-box { padding: 30px 20px; }
             .section-title { font-size: 2rem; }
             .skills-section, .projects-section, .contact-section { padding: 60px 0; }
+
+            /* --- NEW: TECH ARSENAL MOBILE FIX --- */
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+                gap: 15px;
+            }
+            .skill-card {
+                width: 100%;
+                height: 140px; /* Much shorter */
+            }
+            .skill-icon {
+                font-size: 2rem; /* Smaller icons */
+                margin-bottom: 10px;
+            }
+            .skill-name {
+                font-size: 0.85rem; /* Smaller text */
+                text-align: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -428,7 +447,10 @@
             .hero h1 { font-size: 2.2rem; }
             .stats-container { grid-template-columns: 1fr; }
             .hero { padding-top: 100px; }
-            .skill-card { width: 100%; max-width: 200px; }
+            
+            /* If the screen is super narrow, drop to 1 skill per row if needed, 
+               but 2 usually still fits well. Let's keep it at 2 but make them even shorter. */
+            .skill-card { height: 120px; }
         }
     </style>
 </head>
